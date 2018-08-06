@@ -1,0 +1,197 @@
+" 인프니스 연구소 내부에서 코딩시 소스 코드 문서화를 위한 vim macro
+"$HOME/.vim/plugin 에 복사
+
+if exists("infnis_doxygen")
+  finish
+endif
+let infnis_doxygen = 1
+
+" 함수 설명 추가
+let g:Dox_briefTag      ="* @brief       "
+let g:Dox_paramTag      ="* @param       "
+let g:Dox_no_paramTag   ="* @param       없음"
+let g:Dox_returnTag     ="* @return      "
+let g:Dox_blockHeader   ="****************************************************//**"
+let g:Dox_blockFooter   ="*********************************************************/"
+let g:Dox_NoteTag       ="* @note        없음"
+let g:Dox_IngroupTag    ="* @ingroup     "
+let g:Dox_ExcepTag      ="* @exception   없음"
+let g:Dox_err_msg       ="* @warning     없음"
+let g:Dox_src_file_tag  ="* @filename    "
+let g:Dox_dir_tag       ="* @dirname     "
+
+" doxygen parameter
+" 개발자별 수정 할 내용 : Dox_Author, repos_dir
+let g:Dox_Author 		="송지민"
+let g:Dox_CurrentDate 	= 1
+let g:Dox_Param 		= 1
+" repos_dir 은  개발자 개발 경로로 수정
+let g:repos_dir 		="/home/songjimin23/test/sg30"
+let g:sg_dir 			="sg30"
+"let g:sg_dir 			="sg30"
+"-----------------------------
+
+
+if !exists("g:Dox_CurrentDate")
+	let g:Dox_CurrentDate=0
+endif
+
+if g:Dox_CurrentDate != 0
+	let date = strftime("%Y.%m.%d")
+	let g:Dox_dateTag="* @date        ". date
+else
+	let g:Dox_dateTag="* @date        "
+endif
+
+if exists("g:Dox_Author")
+    let g:Dox_authorTag="* @author      ". g:Dox_Author
+else
+    let g:Dox_authorTag="* @author      "
+endif
+
+
+function! MakeDoxygenComment()
+    mark d
+	" get source file name
+	let file_name=expand("%")
+	" get path
+	let dir_name=substitute( expand("%:p:h"), g:repos_dir, g:sg_dir, 'g' )
+	let cr ="\<cr>"
+	exec "set nocindent"
+    exec "normal {"
+	exec "normal O/" . g:Dox_blockHeader .cr . g:Dox_IngroupTag .cr .g:Dox_briefTag
+	exec "normal a" .cr . g:Dox_dir_tag . dir_name
+	exec "normal a" .cr . g:Dox_src_file_tag . file_name
+
+    let l:synopsisLine=line(".")
+    let l:synopsisCol=col(".")
+    let l:nextParamLine=l:synopsisLine+1
+
+    exec "normal `d"
+    let l:line=getline(line("."))
+    let l:startPos=match(l:line, "(")
+    let l:identifierRegex='\i\+[\s\[\]]*[,)]'
+
+	if g:Dox_Param != 0
+    	let l:matchIndex=match(l:line,identifierRegex,l:startPos)
+	else
+		let l:matchIndex = -1
+	endif
+
+	if ( l:matchIndex < 0 )
+        exec "normal O" . g:Dox_no_paramTag
+		exec "normal a" .cr . g:Dox_returnTag 
+	else
+		while (l:matchIndex >= 0)
+			exec "normal " . (l:matchIndex + 1) . "|"
+			let l:param=expand("<cword>")
+			exec l:nextParamLine
+			exec "normal O" . g:Dox_paramTag . l:param . ": "
+			let l:nextParamLine=l:nextParamLine+1
+			exec "normal `d"
+			let l:startPos=(l:matchIndex+strlen(l:param)+1)
+			let l:matchIndex=match(l:line,identifierRegex,l:startPos)
+			let l:synopsisLine=l:synopsisLine + 1
+		endwhile
+		exec l:nextParamLine
+		exec "normal O" . g:Dox_returnTag 
+	endif
+	exec "normal a" .cr . g:Dox_err_msg 
+	exec "normal a" .cr . g:Dox_dateTag 
+	exec "normal a" .cr . g:Dox_authorTag
+	exec "normal a" .cr . g:Dox_blockFooter
+
+    exec l:synopsisLine+1
+    exec "normal " . l:synopsisCol . "|"
+	exec "set cindent"
+    startinsert!
+endfunction
+
+" 소스 파일 문서화 
+" c,cpp 이외의 언어에 대한 고려 필요
+function InsertFileDesc()
+	let cr        ="\<cr>"
+	let file_name=expand("%") .cr
+	let hdr       ="/* -------------------------------- */" .cr
+	let dox_hdr   ="/*********************************//**" .cr
+	let dox_file  ="* @file    "
+	let dox_fdesc ="* @brief   파일 설명을 적어 주세요" .cr
+	let dox_foot  ="*************************************/" .cr
+	let dox_cond  ="///@cond DOXGEN_EXCLUDE_THIS" .cr
+	let dox_econd ="///@endcond" .cr
+	let dbg_lev   ="DECLARE_DBG_LEVEL(2);" .cr
+	let desc_file ="/*           파일 설명 영역         */" .cr
+	let desc_def  ="/*         Define 영역              */" .cr
+	let desc_glo  ="/*         Global 변수 영역         */" .cr
+	let desc_pro  ="/*         Prototype 선언 영역      */" .cr
+	let desc_pro1 ="/* extern 함수는 doxygen에서 제외   */" .cr
+	let desc_code ="/*         Code 영역                */" .cr
+    let dox_author="* @author  " .g:Dox_Author .cr
+
+	exec "set nocindent"
+
+	" 파일 설명 영역
+	exec "normal a" .hdr .desc_file .hdr .dox_hdr .dox_file .file_name .dox_fdesc .dox_author .dox_foot .cr
+	"exec "normal a" .dox_hdr .dox_file .file_name .dox_fdesc .dox_foot .cr
+	"define 영역
+	exec "normal a" .hdr .desc_def .hdr .cr .cr .dox_cond .cr .dox_econd .cr
+	" global variable
+	exec "normal a" .hdr .desc_glo .hdr .cr .cr .dox_cond .dbg_lev .cr .dox_econd .cr
+	" prototype
+	exec "normal a" .hdr .desc_pro .hdr .desc_pro1 .dox_cond .cr .cr .cr .dox_econd .cr .cr .cr .cr
+	" code
+	exec "normal a" .hdr .desc_code .hdr .cr
+
+	exec "set cindent"
+
+endfunction
+
+" 헤더 파일 문서화
+function InsertHeaderFileDesc()
+	let cr        ="\<cr>"
+	let file_name=expand("%") .cr
+	let hdr       ="/* -------------------------------- */" .cr
+	let dox_hdr   ="/*********************************//**" .cr
+	let dox_file  ="* @file    "
+	let dox_fdesc ="* @brief   파일 설명을 적어 주세요" .cr
+	let dox_foot  ="*************************************/" .cr
+	let dox_cond  ="///@cond DOXGEN_EXCLUDE_THIS" .cr
+	let dox_econd ="///@endcond" .cr
+	let dbg_lev   ="DECLARE_DBG_LEVEL(2);" .cr
+	let desc_file ="/*           파일 설명 영역         */" .cr
+    let dox_author="* @author  " .g:Dox_Author .cr
+	let desc_pro  ="/*         Prototype 선언 영역      */" .cr
+	let desc_pro1 ="/* extern 함수는 doxygen에서 제외   */" .cr
+
+	exec "set nocindent"
+
+	" 파일 설명 영역
+	exec "normal a" .hdr .desc_file .hdr .dox_hdr .dox_file .file_name .dox_fdesc 
+	exec "normal a" .dox_author .dox_foot .cr .cr .cr .cr
+	" prototype
+	exec "normal a" .hdr .desc_pro .hdr .desc_pro1 .dox_cond .cr .cr .cr .dox_econd
+
+	exec "set cindent"
+
+endfunction
+
+" exclude tag 삽입
+function InsertExcludeTag()
+	let cr        ="\<cr>"
+	let dox_cond  ="///@cond DOXGEN_EXCLUDE_THIS" .cr
+	let dox_econd ="///@endcond" .cr
+
+	exec "set nocindent"
+	exec "normal a" .dox_cond .dox_econd 
+	exec "set cindent"
+
+endfunction
+
+"-----------------------------
+".vimrc에 추가해서 function key mapping한다.
+map <F1>    :call MakeDoxygenComment()<CR>
+map <F2> 	:call InsertFileDesc()<CR>
+map <F3> 	:call InsertHeaderFileDesc()<CR>
+map <F4> 	:call InsertExcludeTag()<CR>
+
+
