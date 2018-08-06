@@ -1,0 +1,149 @@
+#!/usr/local/bin/bash
+# etyb @ ..
+# -p prompt에서 사용 
+# -b background 로 사용 
+
+tokens=`getopt bp $*` 
+test "$?" = "0" || return 
+eval "set -- $tokens" 
+bgf="fg"
+
+while true 
+do 
+case "$1" in 
+  -p) 
+  if [ $ZSH_NAME ] 
+  then 
+   esc_open='%{' 
+   esc_close='%}' 
+  else 
+   esc_open='\[' 
+   esc_close='\]' 
+  fi 
+  shift 
+  ;; 
+  -b) 
+  bgf="bg"
+  shift
+  ;; 
+
+  --) shift; break; ;; 
+   *) echo "option parsing error for '$1'" ; return ;; 
+esac 
+done 
+
+
+echo_color() 
+{
+  local fg="\e[38;5;" bg="\e[48;5;" rs="\e[0m"
+  local color=$1; shift
+  local arg=$1; shift
+  local msg=$@;
+  [[ $arg == bg ]] && echo -en "${esc_open}${bg}${color}m${msg}${esc_close}"
+  [[ $arg == fg ]] && echo -en "${esc_open}${fg}${color}m${msg}${esc_close}"
+}
+
+echo_none()
+{
+  local fg="\e[38;5;" bg="\e[48;5;" rs="\e[0m"
+  echo -en "${esc_open}${rs}${esc_close}"
+}
+
+
+echo_color_test() 
+{
+#  local colors=(black red green yellow blue magenta cyan white brightblack brightred brightgreen brightyellow brightblue brightmagenta brightcyan brightwhite)
+  local fg="\e[38;5;" bg="\e[48;5;" rs="\e[0m"
+  local color=$1; shift
+  local n=$(printf %3d $color) n2=""
+
+  if [[ -n ${colors[$color]} ]]; then
+    n2=" $(printf %-13s ${colors[$color]})"
+  fi
+
+  for arg in "$@";do
+    [[ $arg == bg ]] && echo -en "${bg}${color}m ${n}${n2} ${rs}"
+    [[ $arg == fg ]] && echo -en "${fg}${color}m ${n}${n2} ${rs}"
+  done
+}
+ 
+all_print()
+{
+  for((c=0; $c < 8; c++)); do
+    echo_color_test $c        bg fg
+    echo_color_test $(($c+8)) bg fg
+    echo 
+  done
+  echo
+ 
+  for((c=16; $c < 256; c++)); do
+    echo_color_test $c bg fg
+    [[ $(($c % 6)) == 3 ]] && echo
+  done
+  echo
+}
+
+#all_print
+#echo_color 18 aaaaaaaaaa bg
+#echo_color 0 bbbbbbb fg
+#echo_color 1 cccccccccc  fg
+
+case $1 in 
+  black)
+    echo_color 0 $bgf ;;
+  red)
+    echo_color 1 $bgf ;;
+  green)
+    echo_color 2 $bgf ;;
+  yellow)
+    echo_color 3 $bgf ;;
+  blue)
+    echo_color 4 $bgf ;;
+  magenta)
+    echo_color 5 $bgf ;;
+  cyan)
+    echo_color 6 $bgf ;;
+  white)
+    echo_color 7 $bgf ;;
+  brightblack)
+    echo_color 8 $bgf ;;
+  brightred)
+    echo_color 9 $bgf ;;
+  brightgreen)
+    echo_color 10 $bgf ;;
+  brightyellow)
+    echo_color 11 $bgf ;;
+  brightblue)
+    echo_color 12 $bgf ;;
+  brightmagenta)
+    echo_color 13 $bgf ;;
+  brightcyan)
+    echo_color 14 $bgf ;;
+  brightwhite)
+    echo_color 15 $bgf ;;
+  none) 
+    echo_none ;;
+  test)
+    echo_color 0 $bgf black; echo 
+    echo_color 1 $bgf red; echo 
+    echo_color 2 $bgf  green; echo 
+    echo_color 3 $bgf  yellow; echo 
+    echo_color 4 $bgf  blue; echo 
+    echo_color 5 $bgf  magenta; echo 
+    echo_color 6 $bgf  cyan; echo 
+    echo_color 7 $bgf  white; echo 
+    echo_color 8 $bgf  brightblack; echo 
+    echo_color 9 $bgf  brightred; echo 
+    echo_color 10 $bgf  brightgreen; echo 
+    echo_color 11 $bgf  brightyellow; echo 
+    echo_color 12 $bgf  brightblue; echo 
+    echo_color 13 $bgf  brightmagenta; echo 
+    echo_color 14 $bgf  brightcyan; echo 
+    echo_color 15 $bgf  brightwhite; echo 
+    echo_none 
+    all_print
+    ;;
+  *) 
+    echo_color $1 $bgf ;; 
+
+esac

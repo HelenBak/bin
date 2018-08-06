@@ -1,0 +1,78 @@
+" cscope 연동
+set csprg=/usr/local/bin/cscope
+set csto=0
+set cst
+set nocsverb
+
+" 특정디렉토리일때 원하는 tag 참조 방법은?
+" 참조 디렉토리가 여러개일수 있도록 수정
+
+let $CUR_PATH=$PWD
+" 특정 경로일때 다른 위치의 cscope,tags 경로를 설정할때 사용
+" Key로 특정 경로를 , 원하는 위치의 cscope,tags 경로를 배열로 저장
+
+let cscope_tag_list = {
+	\ 'sniffles' : [],
+	\ }
+
+for key in keys(cscope_tag_list)
+
+	" 현재패스의 tags 설정
+	"let $full_path_name = join([$CUR_PATH, "/tags"],"")
+	"if filereadable($full_path_name)
+	"	let $TAGS=$full_path_name
+	"endif
+
+	"echo "1) " $CUR_PATH key
+
+	" 동일한 경로가 포함되지 않으면 continue;
+	if match($CUR_PATH, key) == -1 
+		cont
+	endif
+
+	" key가 시작하는 위치
+	let sindex=strridx($CUR_PATH, key)
+	" key가 끝나는 위치
+	let eindex=sindex + strlen(key)
+
+	" 현재PATH와 Key의 종료 위치가 같지 않다면 Key종료 위치의 cscope 설정
+	if strlen($CUR_PATH) != eindex
+		let $full_path_name = join([strpart($CUR_PATH, 0, eindex), "/cscope.out"],"")
+		if filereadable($full_path_name)
+			"echo "2) " $full_path_name 
+			"echo "Parents directory found cscope.out."
+			cs add $full_path_name
+		endif
+	endif
+
+	" substring 현재경로에서 KEY의 시작위치
+	let path1=strpart($CUR_PATH, 0, sindex)
+
+	" 추가로 연관된 경로의 소스 CSCOPE 연동
+	for path2 in cscope_tag_list[key]
+		"echo "3) " path1 path2
+		" $full_path_name는 $표시가 없으면 cs add실행되지 않음
+		let $full_path_name = join([path1, path2, "/cscope.out"],"")
+
+		" 원하는 패스의 cscope가 있으면 설정
+		if filereadable($full_path_name)
+			"echo "4) " $full_path_name
+			"echo "Relation directory found cscope.out."
+			cs add $full_path_name
+		else
+			"echo "4) Not Found cscope.out! (" path2 ")."
+		endif
+
+		" 원하는 패스의 tags가 있으면 설정
+		"let $full_path_name = join([path1, path2, "/tags"],"")
+		"if filereadable($full_path_name)
+			"let $TAGS= join([$TAGS, $full_path_name],":")
+			"echo $TAGS
+		"else
+			"echo "Not Found tags! (" path2 ")."
+		"endif
+	endfor
+
+	" set tags
+	"set tags=$TAGS
+endfor
