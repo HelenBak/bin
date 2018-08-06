@@ -13,3 +13,6 @@
 [submodule "vim/colors/breezy"]
 	path = vim/colors/breezy
 	url = https://github.com/fneu/breezy
+[submodule "vim/colors/vim"]
+	path = vim/colors/vim
+	url = https://github.com/dracula/vim
