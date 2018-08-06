@@ -1,0 +1,15 @@
+[submodule "vim/colors/Apprentice"]
+	path = vim/colors/Apprentice
+	url = https://github.com/romainl/Apprentice
+[submodule "vim/colors/vim-boltzmann"]
+	path = vim/colors/vim-boltzmann
+	url = https://github.com/a-nikolaev/vim-boltzmann.git
+[submodule "vim/colors/vim-afterglow"]
+	path = vim/colors/vim-afterglow
+	url = https://github.com/danilo-augusto/vim-afterglow.git
+[submodule "vim/colors/new-railscasts-theme"]
+	path = vim/colors/new-railscasts-theme
+	url = https://github.com/carakan/new-railscasts-theme.git
+[submodule "vim/colors/breezy"]
+	path = vim/colors/breezy
+	url = https://github.com/fneu/breezy
