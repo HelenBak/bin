@@ -16,3 +16,6 @@
 [submodule "vim/colors/vim"]
 	path = vim/colors/vim
 	url = https://github.com/dracula/vim
+[submodule "vim/bundle/vundle"]
+	path = vim/bundle/vundle
+	url = https://github.com/VundleVim/Vundle.vim.git
