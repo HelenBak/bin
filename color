@@ -1,4 +1,4 @@
-#!/usr/local/bin/bash
+#!/usr/bin/env bash
 # etyb @ ..
 # -p prompt에서 사용 
 # -b background 로 사용 

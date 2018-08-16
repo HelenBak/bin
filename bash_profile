@@ -7,8 +7,8 @@ MY_LOCAL_PATH=/usr/local/sbin:/usr/local/bin
 MY_BIN=$HOME/bin:$HOME/src/bin
 
 export PATH=$MY_BIN:/bin:/usr/bin:/sbin:/usr/sbin:$MY_LOCAL_PATH
-export SVN_EDITOR=/usr/local/bin/vim
-export EDITOR=/usr/local/bin/vim
+export SVN_EDITOR=/usr/bin/vim
+export EDITOR=/usr/bin/vim
 export PAGER=/usr/bin/less
 export IGNOREEOF=5
 
