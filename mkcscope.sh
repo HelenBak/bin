@@ -8,19 +8,51 @@ delete_cscope_files()
  rm -f tags
 }
 
-do_cscope_files()
+do_cscope_files_linux()
 {
     rm -rf cscope.out
 
-    find -E $PWD -regex '.*\.(c(pp|c)?|h(pp)?|py)' > $PWD/cscope.files
+    find $PWD -regextype posix-egrep -regex '.*\.(c(pp)?|h|py)' > $PWD/cscope.files
+
     cscope -b -k -q -i cscope.files
 
     rm -rf cscope.files
 
-    #ctags -R
+    ctags -R
+
+    echo Complete
+}
+
+do_cscope_files_freebsd()
+{
+    rm -rf cscope.out
+
+    find -E $PWD -regex '.*\.(c(pp|c)?|h(pp)?|py)' > $PWD/cscope.files
+
+    cscope -b -k -q -i cscope.files
+
+    rm -rf cscope.files
+
     exctags -R
 
     echo Complete
+}
+
+do_cscope_files()
+{
+
+    os=`uname`
+    case $os in
+        Linux)
+            do_cscope_files_linux
+            ;;
+        FreeBsd|Darwin)
+            do_cscope_files_freebsd
+            ;;
+        *)
+            echo " `basename $0` is support linux/freebsd." >&2
+        ;;
+    esac
 }
 
 _action=${1:-start}

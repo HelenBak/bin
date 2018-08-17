@@ -4,12 +4,13 @@ source ~/.git-prompt.sh
 GIT_PS1_SHOWDIRTYSTATE=1
 
 MY_LOCAL_PATH=/usr/local/sbin:/usr/local/bin
+MY_PKG_PATH=/usr/pkg/sbin:/usr/pkg/bin
 MY_BIN=$HOME/bin:$HOME/src/bin
 
-export PATH=$MY_BIN:/bin:/usr/bin:/sbin:/usr/sbin:$MY_LOCAL_PATH
+export PATH=$MY_BIN:$MY_PKG_PATH:/bin:/usr/bin:/sbin:/usr/sbin:$MY_LOCAL_PATH
 export SVN_EDITOR=/usr/bin/vim
-export EDITOR=/usr/bin/vim
-export PAGER=/usr/bin/less
+export EDITOR=vi
+export PAGER=less
 export IGNOREEOF=5
 
 export CLICOLOR=1
@@ -100,15 +101,11 @@ alias utf8='export LANG=en_US.UTF-8;export LC_ALL=en_US.UTF-8'
 alias 퍄='vi'
 alias ㅊㅇ='cd'
 
-alias rb='cd ~/work/regexbench'
-alias twlib='cd ~/work/tw-lib'
-alias twmgr='cd ~/work/tw-manager'
-alias sf='cd ~/work/sniffles'
-
 # for less color display
 alias less='less -R'
 alias vi='vim'
 
+# less man page
 export LESS_TERMCAP_mb=$'\E[01;31m'
 export LESS_TERMCAP_md=$'\E[01;36m'
 export LESS_TERMCAP_me=$'\E[0m'
