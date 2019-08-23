@@ -40,3 +40,14 @@ cd ~/.vim/bundle/YouCompleteMe
 ```
 
 ## FreeBSD 환경
+
+## MacOS 환경
+
+### brew command
+``` /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" ```
+
+### install
+```
+brew install --with-python3 vim
+```
+###  
