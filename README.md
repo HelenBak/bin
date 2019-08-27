@@ -50,4 +50,19 @@ cd ~/.vim/bundle/YouCompleteMe
 ```
 brew install --with-python3 vim
 ```
-###  
+###  VIM에서 Python개발을 위한 편집
+[참고] http://egloos.zum.com/mcchae/v/11321964
+
+#### 필요한 패키지 설치
+```
+brew install vim ctags git ack
+pip install pep8 flake8 pyflakes isort yapf
+```
+
+#### vimrc 새로 설정
+```
+mv ~/.vimrc ~/.vimrc.org
+wget -O ~/.vimrc  https://raw.github.com/fisadev/fisa-vim-config/master/.vimrc 
+```
+
+
