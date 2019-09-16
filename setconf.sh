@@ -111,6 +111,7 @@ echo  -e "\033[37mSetting My Config\033[m"
 
 # BASH
 setconf bash_profile .
+setconf bash_aliases .
 
 #GIT
 setconf gitignore .
