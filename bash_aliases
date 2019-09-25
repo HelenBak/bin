@@ -1,5 +1,6 @@
 
 # vi
+alias vi='vim'
 alias vt='vi -t main'
 
 #scons
@@ -23,6 +24,8 @@ alias ..='cd ..'
 alias dc='cd'
 alias cd-='cd -'
 alias ps-ef='ps -ef'
+
+# tmux
 alias tmux='tmux -2'
 alias tm='tmux -2'
 alias tma='tmux attach'
@@ -49,10 +52,11 @@ alias ㅊㅇ='cd'
 
 # for less color display
 alias less='less -R'
-alias vi='vim'
 
 alias ssh='ssh -oStrictHostKeyChecking=no'
 alias scp='scp -oStrictHostKeyChecking=no'
 
 # go
-alias gw='cd $GOPATH'
+alias gow='cd $GOPATH'
+alias gor='cd $GOROOT'
+alias gof='gofmt'

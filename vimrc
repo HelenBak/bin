@@ -392,7 +392,7 @@ Plugin 'majutsushi/tagbar'
 Plugin 'mileszs/ack.vim'
 
 " Appearance
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'bitc/vim-bad-whitespace'
 
@@ -418,9 +418,9 @@ Plugin 'tpope/vim-repeat'
 Plugin 'embear/vim-localvimrc'
 
 " R Lang
-Plugin 'jalvesaq/VimCom'
-Plugin 'jcfaria/Vim-R-plugin'
-Plugin 'LaTeX-Box-Team/LaTeX-Box'
+"Plugin 'jalvesaq/VimCom'
+"Plugin 'jcfaria/Vim-R-plugin'
+"Plugin 'LaTeX-Box-Team/LaTeX-Box'
 
 " Autocompletion
 Plugin 'tpope/vim-endwise'
@@ -432,9 +432,9 @@ Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 
 " Ruby plugins
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-cucumber'
-Plugin 'tpope/vim-bundler'
+"Plugin 'vim-ruby/vim-ruby'
+"Plugin 'tpope/vim-cucumber'
+"Plugin 'tpope/vim-bundler'
 
 " Elixir plugins
 Plugin 'elixir-lang/vim-elixir'
@@ -449,6 +449,9 @@ Plugin 'nvie/vim-flake8'
 
 " color
 Plugin 'reewr/vim-monokai-phoenix'
+
+" Go Lang
+Plugin 'fatih/vim-go'
 
 let g:color_schemes = ['vim-kalisi', 'vim-colorschemes', 'vim-monokai-phoenix']
 
@@ -586,6 +589,7 @@ let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline_theme = 'kalisi'
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 
 " Whitespace settings
 
@@ -898,12 +902,8 @@ let $CUR_PATH=$PWD
 " Key로 특정 경로를 , 원하는 위치의 cscope,tags 경로를 배열로 저장
 
 let cscope_tag_list = {
-	\ 'sniffles' : [],
-	\ 'regexbench' : [],
+	\ 'fastGo' : ['src'],
 	\ 'tw-manager/esm_manager' : ['tw-manager/esm_icorba', 'tw-manager/esm_interface', 'tw-manager/esm_iutil'],
-	\ 'tw-manager.bb/esm_manager/command' : ['tw-manager.bb/esm_icorba', 'tw-manager.bb/esm_interface', 'tw-manager.bb/esm_iutil'],
-	\ 'tw-manager.bb/esm_manager/func' : ['tw-manager.bb/esm_icorba', 'tw-manager.bb/esm_interface', 'tw-manager.bb/esm_iutil', 'tw-manager.bb/esm_manager/command'],
-	\ 'tw-manager.bb/esm_manager/dbinsert' : ['tw-manager.bb/esm_icorba', 'tw-manager.bb/esm_interface', 'tw-manager.bb/esm_iutil'],
 	\ 'pius' : ['thrift'],
 	\ }
 
@@ -971,10 +971,8 @@ endfor
 
 set tags +=./tags
 set tags +=../tags
-set tags +=/usr/include/tags
-set tags +=/usr/local/include/tags
-set tags +=/usr/home/sy82free/src/include/tags
-set tags +=/usr/home/sy82free/twmgr/include/tags
+set tags +=$GOPATH/src/tags
+set tags +=$GOROOT/src/tags
 
 " find files using key 'gf'
 set path +=.,./include,../include,../../include,../../../include
@@ -983,3 +981,40 @@ set path +=/usr/local/include
 
 " Mouse
 set mouse=a
+
+" for Golang
+set updatetime=100
+
+" 저장할 때 자동으로 formatting 및 import
+let g:go_fmt_command = "goimports"
+let g:go_list_type = "quickfix"
+let g:go_addtags_transform = "camelcase"
+
+let g:go_autodetect_gopath = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_operators = 1
+let g:go_auto_type_info = 1
+let g:go_auto_sameids = 1
+let g:go_test_timeout = '10s'
+
+" quickfix 이동 및 open/close
+nnoremap <C-n> :cnext<CR>
+nnoremap <C-p> :cprevious<CR>
+nnoremap <LocalLeader>q :call ToggleQuickfixList()<CR>
+
+" 테스트 커버리지 검사 및 색깔 표시 토글
+nnoremap <LocalLeader>c :GoCoverageToggle<CR>
+
+" 자주 쓰는 기능들
+autocmd FileType go nnoremap <Tab>b :GoBuild<CR>
+autocmd FileType go nnoremap <Tab>r :GoRun<CR>
+autocmd FileType go nnoremap <Tab><Tab>r :GoRun %<CR>
+
+autocmd FileType go nnoremap <Tab>t :GoTest<CR>
+autocmd FileType go nnoremap <Tab><Tab>t :GoTestFunc<CR>
+autocmd FileType go nnoremap <Tab>c :GoCoverageToggle<CR>
