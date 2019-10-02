@@ -57,6 +57,6 @@ alias ssh='ssh -oStrictHostKeyChecking=no'
 alias scp='scp -oStrictHostKeyChecking=no'
 
 # go
-alias gow='cd $GOPATH'
-alias gor='cd $GOROOT'
-alias gof='gofmt'
+alias gw='cd $GOPATH'
+alias gr='cd $GOROOT'
+alias gf='gofmt'

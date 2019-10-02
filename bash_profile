@@ -13,11 +13,14 @@ MY_LOCAL_PATH=/usr/local/sbin:/usr/local/bin
 MY_PKG_PATH=/opt/pkg/sbin:/opt/pkg/bin
 MY_BIN=$HOME/bin:$HOME/src/bin
 
-export GOROOT=/opt/pkg/go
-export GOPATH=$HOME/Documents/Go
 
-export PATH=$MY_BIN:$GOROOT/bin:$GOPATH/bin:$MY_PKG_PATH:/bin:/usr/bin:/sbin:/usr/sbin:$MY_LOCAL_PATH
-export SVN_EDITOR=/usr/bin/vim
+#export GOROOT=/opt/pkg/go
+#export GOPATH=$HOME/Documents/Go
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+
+export PATH=$MY_BIN:$GOROOT/bin:$GOPATH/bin:$MY_PKG_PATH:$MY_LOCAL_PATH:/bin:/usr/bin:/sbin:/usr/sbin
+#export SVN_EDITOR=/usr/bin/vim
 export EDITOR=vi
 export PAGER=less
 export IGNOREEOF=5
