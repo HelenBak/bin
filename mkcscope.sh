@@ -57,7 +57,10 @@ do_cscope_files_darwin()
 
     rm -rf $CSCOPE_FILES
 
-    ctags -R
+    #/usr/bin/ctags
+    # ctags -R
+    #pkgin install
+    exctags -R
 
     echo Complete
 }
