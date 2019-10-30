@@ -2,6 +2,7 @@
 # vi
 alias vi='vim'
 alias vt='vi -t main'
+alias vd='vimdiff'
 
 #scons
 alias sc='scons ver=14'
@@ -38,8 +39,9 @@ alias mkae='make'
 alias amke='make'
 alias amek='make'
 
+# grep
 alias diff='diff -Nurp -x ".svn"'
-alias grep='grep --colour=auto --exclude=tags --exclude="*.svn*"'
+alias grep='grep --colour=auto --exclude=tags --exclude="cscope.**"'
 alias rg='grep --colour=auto --exclude=\*.svn\* --exclude=tags -nr'
 alias svndiff='svn diff --diff-cmd /usr/bin/diff -x -Nurp'
 alias ob='objdump -S -l -w -D'
@@ -60,3 +62,14 @@ alias scp='scp -oStrictHostKeyChecking=no'
 alias gw='cd $GOPATH'
 alias gr='cd $GOROOT'
 alias gf='gofmt'
+
+# kraken
+alias wkk='cd ~/work/kraken'
+alias kbp='cd ~/work/kraken/cmd/blackpearl'
+alias kvr='cd ~/work/kraken/cmd/vrouter'
+alias kpt='cd ~/work/kraken/proto/vpc'
+alias kpb='cd ~/work/kraken/pb/vpc'
+alias kpkg='cd ~/work/kraken/pkg'
+alias kdev='cd ~/work/kraken.dev'
+alias bp='cd cmd/blackpearl'
+alias vr='cd cmd/vrouter'

@@ -77,7 +77,7 @@ set wrap-lines = no # 페이저 기반 뷰에서 긴 줄을 감싸는가?
 set tab-size = 4 # 탭을 확장할 때 몇 개의 공백을 사용하는가?
 set line-graphics = default # 그래프 표시방법 -> ascii, default, utf-8
 #set line-graphics = utf-8
-set commit-encoding = "UTF-8" # Comiit encoding
+#set commit-encoding = "UTF-8" # Comiit encoding
 
 # 타입 기반 레퍼런스명 포맷
 #  ㄴ head : 현재 HEAD.
@@ -96,7 +96,7 @@ set reference-format = [branch] <tag> {remote} ~replace~
 
 # Git으로 부터 어떻게 정보를 읽을지를 조절하는 설정들
 set commit-order = auto # Enum: auto, default, topo, date, reverse (main view)
-set status-untracked-dirs = yes # 트래킹하고 있지 않은 디렉토리의 파일들도 보여주는가? (status)
+set status-show-untracked-dirs = yes # 트래킹하고 있지 않은 디렉토리의 파일들도 보여주는가? (status)
 set ignore-space = no # Enum: no, all, some, at-eol (diff)
 set show-notes = yes # `--show-notes=...` 를 전달하는가? (diff)
 set diff-context = 6 # diff changes 를 보여줄 때 라인 수 (diff)

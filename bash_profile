@@ -11,7 +11,7 @@ fi
 MY_LOCAL_PATH=/usr/local/sbin:/usr/local/bin
 #MY_PKG_PATH=/usr/pkg/sbin:/usr/pkg/bin
 MY_PKG_PATH=/opt/pkg/sbin:/opt/pkg/bin
-MY_BIN=$HOME/bin:$HOME/src/bin
+MY_BIN=$HOME/bin:$HOME/src/bin:$HOME/.local/bin
 
 
 #export GOROOT=/opt/pkg/go
