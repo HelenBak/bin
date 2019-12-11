@@ -473,12 +473,12 @@ nmap <leader>v? :map <leader>v <cr>
 
 " Fugitive mapping
 nmap <leader>gb :Gblame<cr>
-nmap <leader>gc :Gcommit<cr>
+"nmap <leader>gc :Gcommit<cr>
 nmap <leader>gd :Gdiff<cr>
 nmap <leader>gg :Ggrep
 nmap <leader>gl :Glog<cr>
-nmap <leader>gp :Git pull<cr>
-nmap <leader>gP :Git push<cr>
+"nmap <leader>gp :Git pull<cr>
+"nmap <leader>gP :Git push<cr>
 nmap <leader>gs :Gstatus<cr>
 nmap <leader>gw :Gbrowse<cr>
 nmap <leader>g? :map <leader>g<cr>
@@ -594,8 +594,8 @@ let g:airline#extensions#tabline#formatter = 'unique_tail'
 " Whitespace settings
 
 " Show trailing whitespace and tabs obnoxiously
-set list listchars=tab:▸\ ,trail:.
-set list
+"set list listchars=tab:▸\ ,trail:.
+"set list
 
 fun! ToggleWhitespace()
     ToggleBadWhitespace
@@ -889,7 +889,8 @@ colorscheme ron
 "colorscheme badwolf
 
 " cscope 연동
-set csprg=/usr/local/bin/cscope
+"set csprg=/usr/local/bin/cscope
+set csprg=/bin/cscope
 set csto=0
 set cst
 set nocsverb
@@ -902,7 +903,10 @@ let $CUR_PATH=$PWD
 " Key로 특정 경로를 , 원하는 위치의 cscope,tags 경로를 배열로 저장
 
 let cscope_tag_list = {
-	\ 'fastGo' : ['src'],
+	\ 'kraken/cmd/blackpeal' : ['kraken/pkg'],
+	\ 'kraken/cmd/vrouter' : ['kraken/pkg'],
+	\ 'kraken.dev/cmd/blackpeal' : ['kraken.dev/pkg'],
+	\ 'kraken.dev/cmd/vrouter' : ['kraken.dev/pkg'],
 	\ 'tw-manager/esm_manager' : ['tw-manager/esm_icorba', 'tw-manager/esm_interface', 'tw-manager/esm_iutil'],
 	\ 'pius' : ['thrift'],
 	\ }
@@ -934,6 +938,14 @@ for key in keys(cscope_tag_list)
 			"echo "2) " $full_path_name 
 			"echo "Parents directory found cscope.out."
 			cs add $full_path_name
+
+	        "set tags+=$full_path_name/$TAGS
+		endif
+
+		let $full_path_name = join([strpart($CUR_PATH, 0, eindex), "/tags"],"")
+		if filereadable($full_path_name)
+	        set tags+=$full_path_name
+			echo $TAGS
 		endif
 	endif
 
@@ -951,26 +963,28 @@ for key in keys(cscope_tag_list)
 			"echo "4) " $full_path_name
 			"echo "Relation directory found cscope.out."
 			cs add $full_path_name
+	        "set tags+=$full_path_name/$TAGS
 		else
 			"echo "4) Not Found cscope.out! (" path2 ")."
 		endif
 
 		" 원하는 패스의 tags가 있으면 설정
-		"let $full_path_name = join([path1, path2, "/tags"],"")
-		"if filereadable($full_path_name)
-			"let $TAGS= join([$TAGS, $full_path_name],":")
-			"echo $TAGS
+		let $full_path_name = join([path1, path2, "/tags"],"")
+		if filereadable($full_path_name)
+	        set tags+=$full_path_name
+			echo $TAGS
 		"else
 			"echo "Not Found tags! (" path2 ")."
-		"endif
+		endif
 	endfor
 
-	" set tags
-	"set tags=$TAGS
 endfor
 
-set tags +=./tags
-set tags +=../tags
+cs add $GOROOT/src/cscope.out
+cs add $GOPATH/src/cscope.out
+
+"set tags +=./tags
+"set tags +=../tags
 set tags +=$GOPATH/src/tags
 set tags +=$GOROOT/src/tags
 
@@ -1018,3 +1032,7 @@ autocmd FileType go nnoremap <Tab><Tab>r :GoRun %<CR>
 autocmd FileType go nnoremap <Tab>t :GoTest<CR>
 autocmd FileType go nnoremap <Tab><Tab>t :GoTestFunc<CR>
 autocmd FileType go nnoremap <Tab>c :GoCoverageToggle<CR>
+
+" go language
+let s:tlist_def_go_settings = 'go;g:enum;s:struct;u:union;t:type;' .
+                           \ 'v:variable;f:function'
