@@ -73,3 +73,11 @@ alias kpkg='cd ~/work/kraken/pkg'
 alias kdev='cd ~/work/kraken.dev'
 alias bp='cd cmd/blackpearl'
 alias vr='cd cmd/vrouter'
+
+# ovs
+alias vls='./cache/bin/vrouter list --rpc-addr 172.16.21.128:5555| jq -r ".Vteps[].SecurityGroups"'
+alias fwin='sudo ovs-ofctl -O OpenFlow13 dump-flows ovsbr --color --names table=140'
+alias fwe='sudo ovs-ofctl -O OpenFlow13 dump-flows ovsbr --color --names table=40'
+
+# ssh
+alias keyadd='ssh-add ~/.ssh/id_rsa'

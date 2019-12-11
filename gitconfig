@@ -1,6 +1,4 @@
 [user]
-    name = soyeonbak
-    email = sy82free@petabi.com
 [color]
     ui = true
 [merge]
@@ -25,6 +23,8 @@
     lgs = log --date-order -C -M --pretty=format:\"<%h> %ad [%an] %d %n    %s%n\" --date=short
     sm = submodule
     br = branch
+    bl = branch -l
+    bclr = remote update --prune
     co = checkout
     cf = checkout --.
     ci = commit
@@ -50,3 +50,5 @@
     re = "!sh -c 'git checkout release_$1' -"
     hot = "!sh -c 'git checkout hotfix_$1' -"
     site = "!sh -c 'git checkout site_$1' -"
+[core]
+	editor = /usr/local/bin/vim

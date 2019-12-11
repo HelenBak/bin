@@ -136,6 +136,7 @@ setconf tigrc .
 # TMUX
 setconf tmux.conf .
 setconf tmux .
+setconf tmux-powerlinerc .
 
 # tmuxifier disable
 #setconf tmuxifier .

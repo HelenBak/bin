@@ -3,6 +3,33 @@ source ~/.git-completion.bash
 source ~/.git-prompt.sh
 GIT_PS1_SHOWDIRTYSTATE=1
 
+start_sshagent()
+{
+    ssh-agent -t 86400 > ~/.ssh-agent.sh
+    #ssh-agent > ~/.ssh-agent.sh
+    echo "No agent! ssh-agent started."
+    . ~/.ssh-agent.sh
+    ssh-add -k
+}
+
+SSHAGENT=$(pidof ssh-agent)
+if [ -f ~/.ssh-agent.sh ]; then
+    if [ "$SSHAGENT" == "" ] ; then
+        rm -rf /tmp/ssh-*
+        start_sshagent
+    else
+        . ~/.ssh-agent.sh
+    fi
+    if [ ! -e $SSH_AUTH_SOCK ] ; then
+        echo "check exist SSH_AUTH_SOCK $SSH_AUTH_SOCK"
+        start_sshagent
+    fi
+fi
+
+if [ ! -S $SSH_AUTH_SOCK ] ; then
+    start_sshagent
+fi
+
 # bash_aliases
 if [ -f ~/.bash_aliases ] ; then
     . ~/.bash_aliases
