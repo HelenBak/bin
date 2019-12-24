@@ -75,9 +75,14 @@ alias bp='cd cmd/blackpearl'
 alias vr='cd cmd/vrouter'
 
 # ovs
-alias vls='./cache/bin/vrouter list --rpc-addr 172.16.21.128:5555| jq -r ".Vteps[].SecurityGroups"'
+alias vls='./cache/bin/vrouter list --rpc-addr 172.16.21.129:5555| jq -r '
 alias fwin='sudo ovs-ofctl -O OpenFlow13 dump-flows ovsbr --color --names table=140'
 alias fwe='sudo ovs-ofctl -O OpenFlow13 dump-flows ovsbr --color --names table=40'
 
+#docker
+alias dmysql='sudo docker exec -it mysql mysql -uroot -pcloudinfra'
+
 # ssh
 alias keyadd='ssh-add ~/.ssh/id_rsa'
+alias sgtest='~/work/kraken/scripts/securitygroup/sgtest.sh'
+alias sgconf='cp ~/work/kraken/scripts/securitygroup/sgtest.conf.example ./sgtest.conf'

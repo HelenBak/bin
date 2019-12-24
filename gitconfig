@@ -1,4 +1,8 @@
 [user]
+    name = soyeon.bak
+    email = soyeon.bak@joyent.com
+[url "git@github.com:cloud-pi"]
+    insteadof = "https://github.com/cloud-pi"
 [color]
     ui = true
 [merge]
