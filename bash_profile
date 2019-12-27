@@ -5,6 +5,7 @@ GIT_PS1_SHOWDIRTYSTATE=1
 
 start_sshagent()
 {
+    rm -rf /tmp/ssh-*
     ssh-agent -t 86400 > ~/.ssh-agent.sh
     #ssh-agent > ~/.ssh-agent.sh
     echo "No agent! ssh-agent started."
@@ -12,18 +13,20 @@ start_sshagent()
     ssh-add -k
 }
 
-SSHAGENT=$(pidof ssh-agent)
 if [ -f ~/.ssh-agent.sh ]; then
+    SSHAGENT=$(pidof ssh-agent)
     if [ "$SSHAGENT" == "" ] ; then
-        rm -rf /tmp/ssh-*
         start_sshagent
     else
         . ~/.ssh-agent.sh
     fi
+
     if [ ! -e $SSH_AUTH_SOCK ] ; then
         echo "check exist SSH_AUTH_SOCK $SSH_AUTH_SOCK"
         start_sshagent
     fi
+else
+   start_sshagent
 fi
 
 if [ ! -S $SSH_AUTH_SOCK ] ; then
