@@ -60,3 +60,12 @@ alias scp='scp -oStrictHostKeyChecking=no'
 alias gw='cd $GOPATH'
 alias gr='cd $GOROOT'
 alias gf='gofmt'
+
+# ipmitool
+alias sipm='ipmitool -H 10.10.10.201 -U ADMIN -P ADMIN -I lanplus'
+alias fipm='ipmitool -H 10.10.10.202 -U ADMIN -P ADMIN -I lanplus'
+
+# expect
+alias server='expect -f ~/.ssh/expect/Server.ex'
+alias db='expect -f ~/.ssh/expect/LabeuDb.ex'
+alias bpvr='expect -f ~/.ssh/expect/LabeuBpVr.ex'
