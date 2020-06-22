@@ -1,0 +1,1 @@
+tmux new-session -s 'test' -n 'Work' \; new-window -n 'Kdev'\; attach

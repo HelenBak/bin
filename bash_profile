@@ -3,6 +3,36 @@ source ~/.git-completion.bash
 source ~/.git-prompt.sh
 GIT_PS1_SHOWDIRTYSTATE=1
 
+start_sshagent()
+{
+    rm -rf /tmp/ssh-*
+    ssh-agent -t 86400 > ~/.ssh-agent.sh
+    #ssh-agent > ~/.ssh-agent.sh
+    echo "No agent! ssh-agent started."
+    . ~/.ssh-agent.sh
+    ssh-add -k
+}
+
+if [ -f ~/.ssh-agent.sh ]; then
+    SSHAGENT=$(pidof ssh-agent)
+    if [ "$SSHAGENT" == "" ] ; then
+        start_sshagent
+    else
+        . ~/.ssh-agent.sh
+    fi
+
+    if [ ! -e $SSH_AUTH_SOCK ] ; then
+        echo "check exist SSH_AUTH_SOCK $SSH_AUTH_SOCK"
+        start_sshagent
+    fi
+else
+   start_sshagent
+fi
+
+if [ ! -S $SSH_AUTH_SOCK ] ; then
+    start_sshagent
+fi
+
 # bash_aliases
 if [ -f ~/.bash_aliases ] ; then
     . ~/.bash_aliases
@@ -11,7 +41,7 @@ fi
 MY_LOCAL_PATH=/usr/local/sbin:/usr/local/bin
 #MY_PKG_PATH=/usr/pkg/sbin:/usr/pkg/bin
 MY_PKG_PATH=/opt/pkg/sbin:/opt/pkg/bin
-MY_BIN=$HOME/bin:$HOME/src/bin
+MY_BIN=$HOME/bin:$HOME/src/bin:$HOME/.local/bin
 
 
 #export GOROOT=/opt/pkg/go

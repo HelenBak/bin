@@ -1,0 +1,1 @@
+tmux new-session -s 'develop' -n 'Bin' \; new-window -n 'Work' \; new-window -n 'Kdev'\; new-window -n 'Testing' \; split-window -h \; split-window -v \; attach
