@@ -64,6 +64,12 @@ alias gr='cd $GOROOT'
 alias gf='gofmt'
 
 # ipmitool
+alias san_up='ipmitool -H 10.10.10.201 -U ADMIN -P ADMIN -I lanplus power on'
+alias san_down='ipmitool -H 10.10.10.201 -U ADMIN -P ADMIN -I lanplus power off'
+alias san_status='ipmitool -H 10.10.10.201 -U ADMIN -P ADMIN -I lanplus power status'
+alias fran_up='ipmitool -H 10.10.10.202 -U ADMIN -P ADMIN -I lanplus power on'
+alias fran_down='ipmitool -H 10.10.10.202 -U ADMIN -P ADMIN -I lanplus power off'
+alias fran_status='ipmitool -H 10.10.10.202 -U ADMIN -P ADMIN -I lanplus power status'
 alias sipm='ipmitool -H 10.10.10.201 -U ADMIN -P ADMIN -I lanplus'
 alias fipm='ipmitool -H 10.10.10.202 -U ADMIN -P ADMIN -I lanplus'
 
