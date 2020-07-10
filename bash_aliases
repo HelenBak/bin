@@ -88,6 +88,12 @@ alias kpkg='cd ~/work/kraken/pkg'
 alias kdev='cd ~/work/kraken.dev'
 alias bp='cd cmd/blackpearl'
 alias vr='cd cmd/vrouter'
+alias pp='cd cmd/papyrus'
+
+alias mt='cd ~/work/spc-vm-metadata'
+alias api='cd ~/work/spc-vm-api'
+alias sdk='cd ~/work/spc-sdk-go'
+alias models='cd ~/work/spc-sdk-go/pkg/compute/metadata/models/'
 
 # ovs
 alias vls='./cache/bin/vrouter list --rpc-addr 172.16.21.129:5555| jq -r '
@@ -95,9 +101,13 @@ alias fwin='sudo ovs-ofctl -O OpenFlow13 dump-flows ovsbr --color --names table=
 alias fwe='sudo ovs-ofctl -O OpenFlow13 dump-flows ovsbr --color --names table=40'
 
 #docker
-alias dmysql='sudo docker exec -it mysql mysql -uroot -pcloudinfra'
+alias dsql='sudo docker exec -it mysql mysql -uroot -pcloudinfra'
+alias dsql2="sudo docker exec -ti mysql sh -c 'export MYSQL_PWD=\"cloudinfra\"; mysql -u root'"
 
 # ssh
 alias keyadd='ssh-add ~/.ssh/id_rsa'
 alias sgtest='~/work/kraken/scripts/securitygroup/sgtest.sh'
 alias sgconf='cp ~/work/kraken/scripts/securitygroup/sgtest.conf.example ./sgtest.conf'
+
+# iptables
+alias aallow='sudo iptables -I INPUT -j ACCEPT; sudo iptables -I OUTPUT -j ACCEPT; sudo iptables -I FORWARD -j ACCEPT;'
