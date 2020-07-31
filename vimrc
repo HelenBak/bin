@@ -890,7 +890,12 @@ colorscheme ron
 
 " cscope 연동
 "set csprg=/usr/local/bin/cscope
-set csprg=/bin/cscope
+if s:OS == 'osx'
+    set csprg=/opt/pkg/bin/cscope
+elseif s:OS == 'linux'
+    set csprg=/bin/cscope
+endif
+
 set csto=0
 set cst
 set nocsverb
