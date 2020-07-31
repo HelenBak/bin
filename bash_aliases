@@ -118,3 +118,6 @@ alias sgconf='cp ~/work/kraken/scripts/securitygroup/sgtest.conf.example ./sgtes
 
 # iptables
 alias aallow='sudo iptables -I INPUT -j ACCEPT; sudo iptables -I OUTPUT -j ACCEPT; sudo iptables -I FORWARD -j ACCEPT;'
+
+# aws 
+alias awsp='python ~/bin/aws/mfa.py --profile'
