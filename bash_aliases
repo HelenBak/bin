@@ -81,8 +81,9 @@ alias fipm='ipmitool -H 10.10.10.202 -U ADMIN -P ADMIN -I lanplus'
 
 # expect
 alias server='expect -f ~/.ssh/expect/Server.ex'
-alias db='expect -f ~/.ssh/expect/LabeuDb.ex'
-alias bpvr='expect -f ~/.ssh/expect/LabeuBpVr.ex'
+alias eudb='expect -f ~/.ssh/expect/LabeuDb.ex'
+alias eubp='expect -f ~/.ssh/expect/LabeuBp.ex'
+alias euvr='expect -f ~/.ssh/expect/LabeuVr.ex'
 
 # kraken
 alias wkk='cd ~/work/kraken'
@@ -117,3 +118,6 @@ alias sgconf='cp ~/work/kraken/scripts/securitygroup/sgtest.conf.example ./sgtes
 
 # iptables
 alias aallow='sudo iptables -I INPUT -j ACCEPT; sudo iptables -I OUTPUT -j ACCEPT; sudo iptables -I FORWARD -j ACCEPT;'
+
+# aws 
+alias awsp='python ~/bin/aws/mfa.py --profile'
