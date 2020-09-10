@@ -86,3 +86,8 @@ alias dmysql='sudo docker exec -it mysql mysql -uroot -pcloudinfra'
 alias keyadd='ssh-add ~/.ssh/id_rsa'
 alias sgtest='~/work/kraken/scripts/securitygroup/sgtest.sh'
 alias sgconf='cp ~/work/kraken/scripts/securitygroup/sgtest.conf.example ./sgtest.conf'
+
+# iptables
+alias ipf='sudo iptables -F'
+alias ipia='sudo iptables -A INPUT -j ACCEPT'
+alias ipoa='sudo iptables -A OUTPUT -j ACCEPT'
