@@ -118,6 +118,9 @@ alias sgtest='~/work/kraken/scripts/securitygroup/sgtest.sh'
 alias sgconf='cp ~/work/kraken/scripts/securitygroup/sgtest.conf.example ./sgtest.conf'
 
 # iptables
+alias ipf='sudo iptables -F'
+alias ipia='sudo iptables -A INPUT -j ACCEPT'
+alias ipoa='sudo iptables -A OUTPUT -j ACCEPT'
 alias aallow='sudo iptables -I INPUT -j ACCEPT; sudo iptables -I OUTPUT -j ACCEPT; sudo iptables -I FORWARD -j ACCEPT;'
 
 # aws 
