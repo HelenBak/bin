@@ -31,6 +31,12 @@ alias tmux='tmux -2'
 alias tm='tmux -2'
 alias tma='tmux attach'
 alias tms='tmux list-session'
+alias tdev='tmux attach -t develop'
+alias ttest='tmux attach -t test'
+alias tpp='tmux attach -t papyrus'
+alias tsdev='~/bin/tmux.session1'
+alias tstest='~/bin/tmux.session2'
+alias tspp='~/bin/tmux.papyrus'
 #alias ldd='otool -L'
 
 alias i='clang-format38 -style="{Language: Cpp, BreakBeforeBraces: WebKit, PointerAlignment: Left}" -i'
@@ -63,6 +69,22 @@ alias gw='cd $GOPATH'
 alias gr='cd $GOROOT'
 alias gf='gofmt'
 
+# ipmitool
+alias san_up='ipmitool -H 10.10.10.201 -U ADMIN -P ADMIN -I lanplus power on'
+alias san_down='ipmitool -H 10.10.10.201 -U ADMIN -P ADMIN -I lanplus power off'
+alias san_status='ipmitool -H 10.10.10.201 -U ADMIN -P ADMIN -I lanplus power status'
+alias fran_up='ipmitool -H 10.10.10.202 -U ADMIN -P ADMIN -I lanplus power on'
+alias fran_down='ipmitool -H 10.10.10.202 -U ADMIN -P ADMIN -I lanplus power off'
+alias fran_status='ipmitool -H 10.10.10.202 -U ADMIN -P ADMIN -I lanplus power status'
+alias sipm='ipmitool -H 10.10.10.201 -U ADMIN -P ADMIN -I lanplus'
+alias fipm='ipmitool -H 10.10.10.202 -U ADMIN -P ADMIN -I lanplus'
+
+# expect
+alias server='expect -f ~/.ssh/expect/Server.ex'
+alias eudb='expect -f ~/.ssh/expect/LabeuDb.ex'
+alias eubp='expect -f ~/.ssh/expect/LabeuBp.ex'
+alias euvr='expect -f ~/.ssh/expect/LabeuVr.ex'
+
 # kraken
 alias wkk='cd ~/work/kraken'
 alias kbp='cd ~/work/kraken/cmd/blackpearl'
@@ -73,6 +95,12 @@ alias kpkg='cd ~/work/kraken/pkg'
 alias kdev='cd ~/work/kraken.dev'
 alias bp='cd cmd/blackpearl'
 alias vr='cd cmd/vrouter'
+alias pp='cd cmd/papyrus'
+
+alias mt='cd ~/work/spc-vm-metadata'
+alias api='cd ~/work/spc-vm-api'
+alias sdk='cd ~/work/spc-sdk-go'
+alias models='cd ~/work/spc-sdk-go/pkg/compute/metadata/models/'
 
 # ovs
 alias vls='./cache/bin/vrouter list --rpc-addr 172.16.21.129:5555| jq -r '
@@ -80,7 +108,8 @@ alias fwin='sudo ovs-ofctl -O OpenFlow13 dump-flows ovsbr --color --names table=
 alias fwe='sudo ovs-ofctl -O OpenFlow13 dump-flows ovsbr --color --names table=40'
 
 #docker
-alias dmysql='sudo docker exec -it mysql mysql -uroot -pcloudinfra'
+alias dsql='sudo docker exec -it mysql mysql -uroot -pcloudinfra'
+alias dsql2="sudo docker exec -ti mysql sh -c 'export MYSQL_PWD=\"cloudinfra\"; mysql -u root'"
 
 # ssh
 alias keyadd='ssh-add ~/.ssh/id_rsa'
@@ -91,3 +120,7 @@ alias sgconf='cp ~/work/kraken/scripts/securitygroup/sgtest.conf.example ./sgtes
 alias ipf='sudo iptables -F'
 alias ipia='sudo iptables -A INPUT -j ACCEPT'
 alias ipoa='sudo iptables -A OUTPUT -j ACCEPT'
+alias aallow='sudo iptables -I INPUT -j ACCEPT; sudo iptables -I OUTPUT -j ACCEPT; sudo iptables -I FORWARD -j ACCEPT;'
+
+# aws 
+alias awsp='python ~/bin/aws/mfa.py --profile'

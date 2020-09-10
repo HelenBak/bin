@@ -51,7 +51,7 @@ do_cscope_files_darwin()
 {
     rm -rf cscope.out
 
-    find -E $G_PWD -regex '( |.)*\.(c(pp|c)?|h(pp)?|py|go)' > $G_PWD/$CSCOPE_FILES
+    /usr/bin/find -E $G_PWD -regex '( |.)*\.(c(pp|c)?|h(pp)?|py|go)' > $G_PWD/$CSCOPE_FILES
 
     cscope -b -k -q -i $CSCOPE_FILES
 
