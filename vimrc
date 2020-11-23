@@ -1041,3 +1041,8 @@ autocmd FileType go nnoremap <Tab>c :GoCoverageToggle<CR>
 " go language
 let s:tlist_def_go_settings = 'go;g:enum;s:struct;u:union;t:type;' .
                            \ 'v:variable;f:function'
+
+" enable auto lint test at save
+"let g:go_metalinter_autosave = 1
+" disable default linters
+"let g:go_metalinter_autosave_enabled = []

@@ -119,3 +119,6 @@ export LANG=en_US.UTF-8
 
 export TERM=xterm-256color
 
+export GO111MODULE=on
+export GOPROXY=direct
+export GOSUMDB=off
